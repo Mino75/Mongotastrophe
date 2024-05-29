@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  express-mongo-api:
+    build:
+      context: .
+      dockerfile: Dockerfile-local
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    environment:
+      - NODE_ENV=production
+      - MONGO_URL=mongodb://mongo:27017/testdb
+      - ENDPOINT=${ENDPOINT}
+      - BASIC_AUTH_USER=${BASIC_AUTH_USER}
+      - BASIC_AUTH_PASSWORD=${BASIC_AUTH_PASSWORD}
+      - API_PORT=${API_PORT}
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
