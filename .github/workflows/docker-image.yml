@@ -25,7 +25,7 @@ jobs:
       run: docker build . --file Dockerfile --tag mongotastrophe:$(date +%s)
 
     - name: Log in to Docker Hub
-      run: docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
-      
+      run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USER }} --password-stdin
+
     - name: Push Docker image to Docker Hub
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/mongotastrophe:$(date +%s)
+      run: docker push ${{ secrets.DOCKER_HUB_USER }}/mongotastrophe:$(date +%s)
