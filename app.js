@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const basicAuth = require('express-basic-auth');
+
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config({ path: '.env-local' });
+}
 
 const app = express();
 const PORT = process.env.API_PORT || 3000;
@@ -15,14 +17,36 @@ if (!mongoUrl || !basicAuthUser || !basicAuthPassword) {
     process.exit(1);
 }
 
+// Custom basic authentication middleware
+const basicAuthMiddleware = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) {
+        res.setHeader('WWW-Authenticate', 'Basic');
+        return res.status(401).send('Authentication required.');
+    }
+
+    const [authType, authValue] = authHeader.split(' ');
+    if (authType !== 'Basic' || !authValue) {
+        res.setHeader('WWW-Authenticate', 'Basic');
+        return res.status(401).send('Invalid authentication format.');
+    }
+
+    const credentials = Buffer.from(authValue, 'base64').toString().split(':');
+    const [username, password] = credentials;
+
+    if (username === basicAuthUser && password === basicAuthPassword) {
+        return next();
+    } else {
+        res.setHeader('WWW-Authenticate', 'Basic');
+        return res.status(401).send('Invalid credentials.');
+    }
+};
+
 // Middleware for basic authentication
-app.use(basicAuth({
-    users: { [basicAuthUser]: basicAuthPassword },
-    challenge: true
-}));
+app.use(basicAuthMiddleware);
 
 // Middleware for parsing JSON bodies
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Endpoint to run MongoDB commands
 app.post(endpoint, async (req, res) => {

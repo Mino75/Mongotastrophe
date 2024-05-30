@@ -2,7 +2,7 @@
   "name": "mongotastrophe",
   "version": "1.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "build": "babel src -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,8 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "basic-auth": "2.0.1",
-    "body-parser": "1.20.2",
+    "dotenv": "^16.4.5",
     "express": "4.19.2",
     "mongoose": "8.4.0"
   }
