@@ -20,7 +20,7 @@ COPY . .
 EXPOSE 3000
 
 # Transpile the code using Babel from node_modules
-RUN npx babel app -d dist
+RUN npx babel . -d dist
 
 # Command to run the application
 CMD ["node", "dist/app.js"]
