@@ -11,8 +11,7 @@ COPY package*.json ./
 RUN npm install
 
 # Install Babel and related dependencies
-RUN npm install @babel/core @babel/preset-env @babel/plugin-transform-runtime @babel/runtime
-
+RUN npm install @babel/core @babel/cli @babel/preset-env
 
 # Copy the rest of the application code
 COPY . .
@@ -20,8 +19,8 @@ COPY . .
 # Expose the port your app runs on
 EXPOSE 3000
 
-# Transpile the code using Babel
-RUN npm run build
+# Transpile the code using Babel from node_modules
+RUN npx babel src -d dist
 
 # Command to run the application
-CMD ["node", "app.js"]
+CMD ["node", "dist/app.js"]
