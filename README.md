@@ -1,5 +1,5 @@
 # mongotastrophe
- mongo service nodejs
+  opensource microservice nodejs for MongoDB database operations
 
 ## Introduction
 Mongotastrphe is a very basic open source MIT Licensed microservice that have only one responsibility, expose an API to request a MongoDB single database
