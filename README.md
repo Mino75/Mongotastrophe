@@ -1,6 +1,12 @@
 # mongotastrophe
   opensource microservice nodejs for MongoDB database operations
 
+  composants : 
+  - nodejs
+  - MongoDb
+  - Docker
+  - Docker compose
+
 ## Introduction
 Mongotastrphe is a very basic open source MIT Licensed microservice that have only one responsibility, expose an API to request a MongoDB single database
 
