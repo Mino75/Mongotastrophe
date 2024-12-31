@@ -1,5 +1,7 @@
 # mongotastrophe
   opensource microservice nodejs for MongoDB database operations
+  Is actually run inside a server
+  WARNING : there is no security provided in the template, security must be set above the template. (Injection proterction, rate limiter, IP blacklisting)
 
   composants : 
   - nodejs
